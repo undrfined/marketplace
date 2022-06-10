@@ -1,14 +1,15 @@
 import React from "react";
-import "./loginWindow.scss";
+import "./Styles/loginWindow.scss";
 import MainPhoto from "./Components/MainPhoto";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { Link } from "react-router-dom";
 
-function App() {
+function Login() {
   return (
     <div className="mainWindow">
       <div className="flexForPhotoAndLogin">
-        <MainPhoto />
+        <MainPhoto signUp={false} />
         <div className="loginMenu">
           <a href="#">
             {" "}
@@ -20,18 +21,18 @@ function App() {
             <Formik
               initialValues={{ email: "", password: "" }}
               validate={(values) => {
-                const errors = { email: "", password: "" };
+                const errors: any = {};
                 if (!values.email) {
-                  errors.email = "Required";
+                  errors.email = "*Email required ";
                 } else if (
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                 ) {
-                  errors.email = "Invalid email address";
+                  errors.email = "*Invalid email address ";
                 }
                 if (!values.password) {
-                  errors.password = "Required";
+                  errors.password = "*Password required ";
                 } else if (values.password.length < 6) {
-                  errors.password = "Password size must be greater than 5";
+                  errors.password = "*Password size must be greater than 5 ";
                 }
                 return errors;
               }}
@@ -63,9 +64,9 @@ function App() {
                     value={values.email}
                   />
 
-                  <p className="erorrMessage">
+                  {/* <p className="erorrMessage">
                     {errors.email && touched.email && errors.email}{" "}
-                  </p>
+                  </p> */}
                   {/* <br></br> */}
 
                   <input
@@ -79,6 +80,7 @@ function App() {
                   />
                   <p className="erorrMessage">
                     {errors.password && touched.password && errors.password}
+                    {errors.email && touched.email && errors.email}{" "}
                   </p>
                   {/* <br></br> */}
 
@@ -94,7 +96,7 @@ function App() {
             </Formik>
             <p className="textField" id="signUp">
               New user?
-              <a className="signUp" href="#">
+              <a className="signUp" href="/signUp">
                 Sign up
               </a>
             </p>
@@ -105,4 +107,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

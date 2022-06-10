@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+
+  font-family: "Raleway", sans-serif;
+  font-size: 14px;
+  color: #6c7279;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.flexOnLoginAndPhoto {
+  display: flex;
+}
+.loginBlockDiv {
+  margin-left: 20vw;
+  width: 24vw;
+  margin-top: 12vh;
+  color: #d8000c;
+}
+.mainText {
+  font-family: "Almarai";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 36px;
+  color: #6c7279;
+}
+.textField {
+  font-family: "Almarai";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #a8acb8;
+  margin-bottom: 34px;
+}
+
+.input {
+  width: 25vw;
+  height: 45px;
+  margin-bottom: 15px;
+  background: rgba(168, 172, 184, 0.1);
+  backdrop-filter: blur(4px);
+  /* Note: backdrop-filter has minimal browser support */
+  padding-left: 20px;
+  border: none;
+  border-radius: 40px;
+  font-family: "Almarai";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #a8acb8;
+}
+.nameField {
+  width: 12vw;
+}
+.surnameField {
+  margin-left: 1vw;
+  width: 12vw;
+}
+.submitBtn {
+  margin-top: 19px;
+  height: 54px;
+  width: 25vw;
+  background: #3bbeb6;
+  border: 1px solid #3bbeb6;
+  border-radius: 40px;
+  font-family: "Almarai";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #ffffff;
+}
+.submitBtn:hover {
+  cursor: pointer;
+}
+.cancelDiv {
+  margin-top: 3vh;
+
+  margin-left: 53vw;
+}
+.bottomSignUp {
+  margin-left: 30vw;
+  margin-top: 9.5vh;
+}
+#signUpSpanRef {
+  color: #3bbeb6;
+}
+#signUpRefLink {
+  text-decoration: none;
+}
+.flexOnNameSurname {
+  display: flex;
+}
+.rightPartDiv {
+  width: 60vw;
+}
