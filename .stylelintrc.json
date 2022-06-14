@@ -8,7 +8,8 @@
   "plugins": [
     "stylelint-declaration-block-no-ignored-properties",
     "stylelint-high-performance-animation",
-    "stylelint-group-selectors"
+    "stylelint-group-selectors",
+    "stylelint-css-modules"
   ],
   "rules": {
     "number-leading-zero": "always",
@@ -28,6 +29,9 @@
       {
         "ignorePseudoClasses": ["global"]
       }
-    ]
+    ],
+    "css-modules/composed-class-names": true,
+    "css-modules/css-variables": null,
+    "property-no-unknown": null
   }
 }

@@ -21,6 +21,10 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'react/prop-types': 'off',
+    'react/button-has-type': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'import/extensions': [
       'error',

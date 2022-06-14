@@ -1,0 +1,13 @@
+.root {
+  background: var(--color-background-input);
+  padding: 0.875rem 1.375rem;
+  border: none;
+  border-radius: 2.5rem;
+  width: 100%;
+}
+
+.error {
+  margin-top: 0.25rem;
+  margin-left: 0.75rem;
+  color: var(--color-important);
+}

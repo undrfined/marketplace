@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "classnames": "^2.3.1",
     "formik": "^2.2.9",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -14,7 +15,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix "
+    "*.{css,scss}": "stylelint --fix"
   },
   "engines": {
     "node": ">=16.13.2",
@@ -54,6 +55,7 @@
     "stylelint": "^14.8.5",
     "stylelint-config-recommended": "^7.0.0",
     "stylelint-config-recommended-scss": "^6.0.0",
+    "stylelint-css-modules": "^1.2.2",
     "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
     "stylelint-group-selectors": "^1.0.8",
     "stylelint-high-performance-animation": "^1.6.0"

@@ -1,0 +1,48 @@
+.root {
+  font-weight: 700;
+  font-size: 0.875rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: 0.1s ease-in-out opacity,
+              0.1s ease-in-out transform,
+              0.25s ease-in-out background-color;
+}
+
+.primary {
+  padding: 1.25rem 2rem;
+  border-radius: 2rem;
+  background: var(--color-accent);
+  color: var(--color-background);
+}
+
+.primary:hover, .secondary:hover {
+  opacity: 0.9;
+}
+
+.primary:active, .secondary:hover {
+  transform: translateY(2px);
+}
+
+.primary[disabled], .secondary[disabled] {
+  cursor: initial;
+  background: var(--color-text-secondary);
+}
+
+
+.icon-translucent {
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.icon-primary {
+  composes: icon-translucent;
+}
+
+.icon-secondary {
+  composes: icon-translucent;
+}
+
+.icon-translucent:hover {
+  background-color: var(--color-background-input);
+}
