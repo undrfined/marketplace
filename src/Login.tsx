@@ -1,9 +1,7 @@
-import React from "react";
-import "./Styles/loginWindow.scss";
-import MainPhoto from "./Components/MainPhoto";
-import { Formik } from "formik";
-import * as yup from "yup";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './Styles/loginWindow.scss';
+import { Formik } from 'formik';
+import MainPhoto from './Components/MainPhoto';
 
 function Login() {
   return (
@@ -11,33 +9,35 @@ function Login() {
       <div className="flexForPhotoAndLogin">
         <MainPhoto signUp={false} />
         <div className="loginMenu">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="#">
-            {" "}
-            <img className="cancel" src="images\vector.png" alt="cancel"></img>
+            {' '}
+            <img className="cancel" src="images\vector.png" alt="cancel" />
           </a>
           <p className="welcomeField">Welcome</p>
           <p className="textField">Enter information below for login</p>
           <div className="loginForm">
             <Formik
-              initialValues={{ email: "", password: "" }}
+              initialValues={{ email: '', password: '' }}
               validate={(values) => {
                 const errors: any = {};
                 if (!values.email) {
-                  errors.email = "*Email required ";
+                  errors.email = '*Email required ';
                 } else if (
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                 ) {
-                  errors.email = "*Invalid email address ";
+                  errors.email = '*Invalid email address ';
                 }
                 if (!values.password) {
-                  errors.password = "*Password required ";
+                  errors.password = '*Password required ';
                 } else if (values.password.length < 6) {
-                  errors.password = "*Password size must be greater than 5 ";
+                  errors.password = '*Password size must be greater than 5 ';
                 }
                 return errors;
               }}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
+                  // eslint-disable-next-line no-alert
                   alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
                 }, 400);
@@ -80,7 +80,8 @@ function Login() {
                   />
                   <p className="erorrMessage">
                     {errors.password && touched.password && errors.password}
-                    {errors.email && touched.email && errors.email}{" "}
+                    {errors.email && touched.email && errors.email}
+                    {' '}
                   </p>
                   {/* <br></br> */}
 

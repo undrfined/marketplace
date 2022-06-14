@@ -1,17 +1,16 @@
-// import logo from '';
-import React from "react";
-import MainPhoto from "./Components/MainPhoto";
-import { Formik } from "formik";
-import "./Styles/SignUp.scss";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Formik } from 'formik';
+import MainPhoto from './Components/MainPhoto';
+import './Styles/SignUp.scss';
 
 function Registry() {
   return (
     <div className="mainWindow">
       <div className="flexOnLoginAndPhoto">
-        <MainPhoto signUp={true} />
+        <MainPhoto signUp />
         <div className="rightPartDiv">
           <div className="cancelDiv">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#">
               <img src="images\vector.png" alt="vector" />
             </a>
@@ -21,43 +20,44 @@ function Registry() {
             <p className="textField">Enter information below for login</p>
             <Formik
               initialValues={{
-                email: "",
-                password: "",
-                name: "",
-                surname: "",
-                confirmPassword: "",
+                email: '',
+                password: '',
+                name: '',
+                surname: '',
+                confirmPassword: '',
               }}
               validate={(values) => {
                 const errors: any = {};
                 if (!values.name) {
-                  errors.name = "*Name required ";
+                  errors.name = '*Name required ';
                 } else if (!/[A-Za-z]+/i.test(values.name)) {
-                  errors.name = "*Invalid name";
+                  errors.name = '*Invalid name';
                 }
                 if (!values.surname) {
-                  errors.surname = "*Surname required ";
+                  errors.surname = '*Surname required ';
                 } else if (!/[A-Za-z]+/i.test(values.surname)) {
-                  errors.surname = "*Invalid surname";
+                  errors.surname = '*Invalid surname';
                 }
                 if (!values.email) {
-                  errors.email = "*Email required ";
+                  errors.email = '*Email required ';
                 } else if (
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                 ) {
-                  errors.email = "*Invalid email address";
+                  errors.email = '*Invalid email address';
                 }
                 if (!values.password) {
-                  errors.password = "*Password required";
+                  errors.password = '*Password required';
                 } else if (values.password.length < 6) {
-                  errors.password = "*Password size must be greater than 5";
+                  errors.password = '*Password size must be greater than 5';
                 }
                 if (values.password !== values.confirmPassword) {
-                  errors.confirmPassword = "*Password must be the same";
+                  errors.confirmPassword = '*Password must be the same';
                 }
                 return errors;
               }}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
+                  // eslint-disable-next-line no-alert
                   alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
                 }, 400);
@@ -128,10 +128,11 @@ function Registry() {
                     {errors.name && touched.name && errors.name}
                     {errors.surname && touched.surname && errors.surname}
                     {errors.password && touched.password && errors.password}
-                    {errors.confirmPassword &&
-                      touched.confirmPassword &&
-                      errors.confirmPassword}
-                    {errors.email && touched.email && errors.email}{" "}
+                    {errors.confirmPassword
+                      && touched.confirmPassword
+                      && errors.confirmPassword}
+                    {errors.email && touched.email && errors.email}
+                    {' '}
                   </p>
                   <button
                     type="submit"
@@ -146,7 +147,8 @@ function Registry() {
           </div>
           <div className="bottomSignUp">
             <p className="textField">
-              Back to{" "}
+              Back to
+              {' '}
               <a id="signUpRefLink" href="/login">
                 <span id="signUpSpanRef">Login</span>
               </a>
