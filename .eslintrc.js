@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    "no-param-reassign": [2, { "props": false }],
     'react/prop-types': 'off',
     'react/button-has-type': 'off',
     'react/jsx-props-no-spreading': 'off',
