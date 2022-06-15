@@ -1,0 +1,52 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headerWrapper {
+  box-shadow: var(--shadow-header);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  max-width: 1720px;
+  width: 100%;
+  padding: 0.75rem 2rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.left {
+  margin-left: auto;
+}
+
+.button {
+  flex: 1 0 auto;
+}
+
+.loggedInButton {
+  composes: button;
+  display: flex;
+  padding: 0.25rem !important;
+  align-items: center;
+  gap: 0.75rem;
+
+  i {
+    margin-left: 0.5rem;
+  }
+  img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+  }
+}
+
+.search {
+  width: 100%;
+  margin: 0 10%;
+}

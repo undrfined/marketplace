@@ -1,4 +1,8 @@
 .root {
+  position: relative;
+}
+
+.input {
   background: var(--color-background-input);
   padding: 0.875rem 1.375rem;
   border: none;
@@ -6,8 +10,21 @@
   width: 100%;
 }
 
+.iconPadding {
+  padding-left: 2.5rem;
+}
+
 .error {
   margin-top: 0.25rem;
   margin-left: 0.75rem;
   color: var(--color-important);
+}
+
+.icon {
+  font-size: 1.125rem;
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: var(--color-text-secondary);
 }

@@ -55,7 +55,7 @@ function Auth<T extends Record<string, string>>({
         <img src={LoginHero} alt="Login hero" className={styles.heroImage} />
       </div>
       <div className={styles.formWrapper}>
-        <Button variant="icon-translucent" className={styles.closeButton} onClick={onClose}>
+        <Button variant="icon-translucent" className={styles.closeButton} onClick={onClose} buttonSize="small">
           <i className="icon-close" />
         </Button>
 
