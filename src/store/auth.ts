@@ -1,12 +1,15 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import makeRequest, { ApiMethod } from '../api/makeRequest';
 
 type AuthState = {
-  value: number;
+  isLoading: boolean;
+  error?: string;
+  token?: string;
+  refreshToken?: string;
 };
 
 const initialState: AuthState = {
-  value: 0,
+  isLoading: false,
 };
 
 export const login = createAsyncThunk(
@@ -14,28 +17,46 @@ export const login = createAsyncThunk(
   (params: ApiMethod['login']) => makeRequest('login', params),
 );
 
+export const signUp = createAsyncThunk(
+  'auth/signUp',
+  (params: ApiMethod['signUp']) => makeRequest('signUp', params),
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
   },
-  extraReducers: {
-    [login.rejected.type]: (state, action) => {
-      console.log('reject??', action);
-    },
-    [login.pending.type]: (state, action) => {
-      console.log('pending??', action);
-    },
-    [login.fulfilled.type]: (state, action) => {
-      console.log('wtf??', action);
-      // state.value += action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.error = undefined;
+        state.isLoading = true;
+      })
+      .addCase(login.rejected, (state, { error }) => {
+        state.error = error.message;
+        state.isLoading = false;
+      })
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.token = payload.token;
+        state.refreshToken = payload.refreshToken;
+        state.isLoading = false;
+      });
+
+    builder
+      .addCase(signUp.pending, (state) => {
+        state.error = undefined;
+        state.isLoading = true;
+      })
+      .addCase(signUp.rejected, (state, { error }) => {
+        state.error = error.message;
+        state.isLoading = false;
+      })
+      .addCase(signUp.fulfilled, (state) => {
+        // TODO token
+        state.isLoading = false;
+      });
   },
 });
-
-export const { incrementByAmount } = authSlice.actions;
 
 export default authSlice.reducer;

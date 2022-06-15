@@ -3,6 +3,7 @@ import { FormikHelpers } from 'formik';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { login } from '../../../store/auth';
+import { getInfo } from '../../../store/user';
 
 type LoginValues = {
   email: string;
@@ -11,7 +12,7 @@ type LoginValues = {
 
 function Login() {
   const dispatch = useAppDispatch();
-  const a = useAppSelector((l) => l.auth.value);
+  const error = useAppSelector((l) => l.auth.error);
 
   const handleValidate = (values: LoginValues) => {
     const errors: Partial<Record<keyof LoginValues, string>> = {};
@@ -34,9 +35,8 @@ function Login() {
   };
 
   const handleSubmit = (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
-    dispatch(login(values)).then((result) => {
-      // eslint-disable-next-line no-alert
-      alert(JSON.stringify(result, null, 2));
+    dispatch(login(values)).then(() => {
+      dispatch(getInfo());
       setSubmitting(false);
     });
   };
@@ -62,8 +62,9 @@ function Login() {
       footerLinkNavigation="/signup"
       footerText="New user?"
       buttonText="Login"
-      headerText={`Welcome!${a}`}
+      headerText="Welcome!"
       headerDescription="Enter information below for login"
+      error={error}
       onClose={() => {
 
       }}

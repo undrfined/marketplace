@@ -1,29 +1,34 @@
 import React from 'react';
 import { FormikHelpers } from 'formik';
 import Auth from '../Auth/Auth';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { login, signUp } from '../../../store/auth';
 
 type SignUpValues = {
-  firstName: string;
-  lastName: string;
+  name: string;
+  surname: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
 function SignUp() {
+  const dispatch = useAppDispatch();
+  const error = useAppSelector((l) => l.auth.error);
+
   const handleValidate = (values: SignUpValues) => {
     const errors: Partial<Record<keyof SignUpValues, string>> = {};
 
-    if (!values.firstName) {
-      errors.firstName = '*Name required ';
-    } else if (!/[A-Za-z]+/i.test(values.firstName)) {
-      errors.firstName = '*Invalid name';
+    if (!values.name) {
+      errors.name = '*Name required ';
+    } else if (!/[A-Za-z]+/i.test(values.name)) {
+      errors.name = '*Invalid name';
     }
 
-    if (!values.lastName) {
-      errors.lastName = '*Surname required ';
-    } else if (!/[A-Za-z]+/i.test(values.lastName)) {
-      errors.lastName = 'Invalid surname';
+    if (!values.surname) {
+      errors.surname = '*Surname required ';
+    } else if (!/[A-Za-z]+/i.test(values.surname)) {
+      errors.surname = 'Invalid surname';
     }
 
     if (!values.email) {
@@ -48,11 +53,17 @@ function SignUp() {
   };
 
   const handleSubmit = (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
-    setTimeout(() => {
-      // eslint-disable-next-line no-alert
-      alert(JSON.stringify(values, null, 2));
+    dispatch(signUp(values)).then((result) => {
+      if (!('error' in result)) {
+        console.log(result);
+        login({
+          email: values.email,
+          password: values.password,
+        });
+      }
+
       setSubmitting(false);
-    }, 400);
+    });
   };
 
   return (
@@ -64,12 +75,12 @@ function SignUp() {
           {
             type: 'text',
             placeholder: 'First Name',
-            name: 'firstName',
+            name: 'name',
           },
           {
             type: 'text',
             placeholder: 'Last Name',
-            name: 'lastName',
+            name: 'surname',
           },
         ],
         {
@@ -89,12 +100,13 @@ function SignUp() {
         },
       ]}
       initialValues={{
-        email: '', password: '', confirmPassword: '', firstName: '', lastName: '',
+        email: '', password: '', confirmPassword: '', name: '', surname: '',
       }}
       footerLinkText="login"
       footerLinkNavigation="/login"
       footerText="Back to"
       buttonText="Next"
+      error={error}
       headerText="Sign Up"
       headerDescription="Just a few quick steps to create your account"
       onClose={() => {

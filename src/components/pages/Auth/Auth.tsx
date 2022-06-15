@@ -28,6 +28,7 @@ type OwnProps<T extends Record<string, string>> = {
 
   headerText: string;
   headerDescription: string;
+  error?: string;
   buttonText: string;
   footerText: string;
   footerLinkText: string;
@@ -46,6 +47,7 @@ function Auth<T extends Record<string, string>>({
   footerLinkNavigation,
   headerText,
   headerDescription,
+  error,
 }: OwnProps<T>) {
   return (
     <div className={styles.root}>
@@ -103,6 +105,8 @@ function Auth<T extends Record<string, string>>({
 
                   return renderInput(input);
                 })}
+
+                {error && <div className={styles.error}>{error}</div>}
 
                 <Button
                   type="submit"
