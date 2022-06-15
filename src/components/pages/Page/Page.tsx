@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/images/Logo.svg';
 import styles from './Page.module.scss';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { useAppSelector } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { logOut } from '../../../store/auth';
 
 type OwnProps = {
   children: React.ReactNode;
@@ -14,8 +15,13 @@ type OwnProps = {
 function Page({
   children,
 }: OwnProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.auth.token);
+
+  const handleClickMenu = useCallback(() => {
+    dispatch(logOut());
+  }, []);
 
   const isLoggedIn = Boolean(token);
 
@@ -32,7 +38,7 @@ function Page({
           </Button>
 
           {isLoggedIn && (
-            <Button variant="secondary" buttonSize="small" className={styles.loggedInButton}>
+            <Button variant="secondary" buttonSize="small" className={styles.loggedInButton} onClick={handleClickMenu}>
               <i className="icon-menu" />
               <img src={Logo} alt="Avatar" />
             </Button>
