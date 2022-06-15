@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/images/Logo.svg';
 import styles from './Page.module.scss';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { useAppSelector } from '../../../store/store';
 
 type OwnProps = {
   children: React.ReactNode;
@@ -12,6 +14,11 @@ type OwnProps = {
 function Page({
   children,
 }: OwnProps) {
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.auth.token);
+
+  const isLoggedIn = Boolean(token);
+
   return (
     <div className={styles.root}>
       <div className={styles.headerWrapper}>
@@ -24,17 +31,23 @@ function Page({
             <i className="icon-cart" />
           </Button>
 
-          <Button variant="secondary" buttonSize="small" className={styles.loggedInButton}>
-            <i className="icon-menu" />
-            <img src={Logo} alt="Avatar" />
-          </Button>
+          {isLoggedIn && (
+            <Button variant="secondary" buttonSize="small" className={styles.loggedInButton}>
+              <i className="icon-menu" />
+              <img src={Logo} alt="Avatar" />
+            </Button>
+          )}
 
-          {/* <Button variant="secondary" buttonSize="small" className={styles.button}> */}
-          {/*  Log in */}
-          {/* </Button> */}
-          {/* <Button variant="primary" buttonSize="small" className={styles.button}> */}
-          {/*  Sign up */}
-          {/* </Button> */}
+          {!isLoggedIn && (
+            <>
+              <Button variant="secondary" buttonSize="small" className={styles.button} onClick={() => navigate('/login')}>
+                Log in
+              </Button>
+              <Button variant="primary" buttonSize="small" className={styles.button} onClick={() => navigate('/signUp')}>
+                Sign up
+              </Button>
+            </>
+          )}
         </div>
       </div>
       {children}

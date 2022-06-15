@@ -10,6 +10,8 @@ type AuthState = {
 
 const initialState: AuthState = {
   isLoading: false,
+  token: localStorage.getItem('token') || undefined,
+  refreshToken: localStorage.getItem('refreshToken') || undefined,
 };
 
 export const login = createAsyncThunk(
@@ -40,6 +42,8 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, { payload }) => {
         state.token = payload.token;
         state.refreshToken = payload.refreshToken;
+        localStorage.setItem('token', payload.token);
+        localStorage.setItem('refreshToken', payload.refreshToken);
         state.isLoading = false;
       });
 

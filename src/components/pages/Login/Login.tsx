@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormikHelpers } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { login } from '../../../store/auth';
@@ -12,6 +13,7 @@ type LoginValues = {
 
 function Login() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const error = useAppSelector((l) => l.auth.error);
 
   const handleValidate = (values: LoginValues) => {
@@ -37,6 +39,7 @@ function Login() {
   const handleSubmit = (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
     dispatch(login(values)).then(() => {
       dispatch(getInfo());
+      navigate('/');
       setSubmitting(false);
     });
   };
@@ -65,9 +68,6 @@ function Login() {
       headerText="Welcome!"
       headerDescription="Enter information below for login"
       error={error}
-      onClose={() => {
-
-      }}
     />
   );
 }

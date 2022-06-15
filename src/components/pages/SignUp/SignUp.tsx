@@ -1,8 +1,10 @@
 import React from 'react';
 import { FormikHelpers } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { login, signUp } from '../../../store/auth';
+import { getInfo } from '../../../store/user';
 
 type SignUpValues = {
   name: string;
@@ -14,6 +16,7 @@ type SignUpValues = {
 
 function SignUp() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const error = useAppSelector((l) => l.auth.error);
 
   const handleValidate = (values: SignUpValues) => {
@@ -55,10 +58,12 @@ function SignUp() {
   const handleSubmit = (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
     dispatch(signUp(values)).then((result) => {
       if (!('error' in result)) {
-        console.log(result);
-        login({
+        dispatch(login({
           email: values.email,
           password: values.password,
+        })).then(() => {
+          navigate('/');
+          dispatch(getInfo());
         });
       }
 
@@ -109,9 +114,6 @@ function SignUp() {
       error={error}
       headerText="Sign Up"
       headerDescription="Just a few quick steps to create your account"
-      onClose={() => {
-
-      }}
     />
   );
 }

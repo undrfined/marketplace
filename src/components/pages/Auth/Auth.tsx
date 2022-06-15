@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, FormikHelpers } from 'formik';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import LoginHero from '../../../assets/images/LoginHero.jpeg';
 
 import styles from './Auth.module.scss';
@@ -22,7 +22,6 @@ type OwnProps<T extends Record<string, string>> = {
   onValidate: (values: T) => Record<string, string>;
   onSubmit: (values: T, helpers: FormikHelpers<T>) => void;
 
-  onClose: VoidFunction;
   initialValues: T;
   inputs: (InputType<StringKey<T>> | InputType<StringKey<T>>[])[];
 
@@ -38,7 +37,6 @@ type OwnProps<T extends Record<string, string>> = {
 function Auth<T extends Record<string, string>>({
   onValidate,
   onSubmit,
-  onClose,
   initialValues,
   inputs,
   buttonText,
@@ -49,13 +47,15 @@ function Auth<T extends Record<string, string>>({
   headerDescription,
   error,
 }: OwnProps<T>) {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.root}>
       <div className={styles.heroImageWrapper}>
         <img src={LoginHero} alt="Login hero" className={styles.heroImage} />
       </div>
       <div className={styles.formWrapper}>
-        <Button variant="icon-translucent" className={styles.closeButton} onClick={onClose} buttonSize="small">
+        <Button variant="icon-translucent" className={styles.closeButton} onClick={() => navigate('/')} buttonSize="small">
           <i className="icon-close" />
         </Button>
 
