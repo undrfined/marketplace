@@ -19,7 +19,7 @@ type InputType<T extends string> = {
 };
 
 type OwnProps<T extends Record<string, string>> = {
-  onValidate: (values: T) => Record<string, string>;
+  validationSchema: any;
   onSubmit: (values: T, helpers: FormikHelpers<T>) => void;
 
   initialValues: T;
@@ -35,7 +35,7 @@ type OwnProps<T extends Record<string, string>> = {
 };
 
 function Auth<T extends Record<string, string>>({
-  onValidate,
+  validationSchema,
   onSubmit,
   initialValues,
   inputs,
@@ -55,13 +55,18 @@ function Auth<T extends Record<string, string>>({
         <img src={LoginHero} alt="Login hero" className={styles.heroImage} />
       </div>
       <div className={styles.formWrapper}>
-        <Button variant="icon-translucent" className={styles.closeButton} onClick={() => navigate('/')} buttonSize="small">
+        <Button
+          variant="icon-translucent"
+          className={styles.closeButton}
+          onClick={() => navigate('/')}
+          buttonSize="small"
+        >
           <i className="icon-close" />
         </Button>
 
         <Formik
           initialValues={initialValues}
-          validate={onValidate}
+          validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
           {({
@@ -78,7 +83,7 @@ function Auth<T extends Record<string, string>>({
                 key={input.name}
                 type={input.type}
                 name={input.name}
-                error={touched[input.name] && errors[input.name] as string}
+                error={touched[input.name] && (errors[input.name] as string)}
                 className={styles.formInput}
                 placeholder={input.placeholder}
                 onChange={handleChange}
@@ -90,9 +95,7 @@ function Auth<T extends Record<string, string>>({
             return (
               <form onSubmit={handleSubmit} className={styles.form}>
                 <h1 className={styles.header}>{headerText}</h1>
-                <div className={styles.text}>
-                  {headerDescription}
-                </div>
+                <div className={styles.text}>{headerDescription}</div>
 
                 {inputs.map((input) => {
                   if (Array.isArray(input)) {

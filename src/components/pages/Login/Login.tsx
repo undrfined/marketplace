@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { login } from '../../../store/auth';
@@ -16,27 +17,17 @@ function Login() {
   const navigate = useNavigate();
   const error = useAppSelector((l) => l.auth.error);
 
-  const handleValidate = (values: LoginValues) => {
-    const errors: Partial<Record<keyof LoginValues, string>> = {};
-
-    if (!values.email) {
-      errors.email = 'Email required';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-    ) {
-      errors.email = 'Invalid email address';
-    }
-
-    if (!values.password) {
-      errors.password = 'Password required';
-    } else if (values.password.length < 6) {
-      errors.password = 'Password size must be greater than 5';
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
+  const validationScheme = yup.object().shape({
+    email: yup.string().email('*Incorrect email').required('*Email required'),
+    password: yup
+      .string()
+      .required('*Password required')
+      .min(5, '*Password is too short - should be 5 chars minimum.'),
+  });
+  const handleSubmit = (
+    values: LoginValues,
+    { setSubmitting }: FormikHelpers<LoginValues>
+  ) => {
     dispatch(login(values)).then(() => {
       dispatch(getInfo());
       navigate('/');
@@ -47,7 +38,7 @@ function Login() {
   return (
     <Auth
       onSubmit={handleSubmit}
-      onValidate={handleValidate}
+      validationSchema={validationScheme}
       inputs={[
         {
           type: 'email',

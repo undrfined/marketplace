@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { login, signUp } from '../../../store/auth';
@@ -18,50 +19,31 @@ function SignUp() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const error = useAppSelector((l) => l.auth.error);
+  const validationScheme = yup.object().shape({
+    name: yup.string().required('*Name required'),
+    surname: yup.string().required('*Surname required'),
+    email: yup.string().email('*Incorrect email').required('* Email required'),
+    password: yup
+      .string()
+      .required('*Password required')
+      .min(5, '*Password is too short - should be 5 chars minimum.'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], '*Passwords must match'),
+  });
 
-  const handleValidate = (values: SignUpValues) => {
-    const errors: Partial<Record<keyof SignUpValues, string>> = {};
-
-    if (!values.name) {
-      errors.name = '*Name required ';
-    } else if (!/[A-Za-z]+/i.test(values.name)) {
-      errors.name = '*Invalid name';
-    }
-
-    if (!values.surname) {
-      errors.surname = '*Surname required ';
-    } else if (!/[A-Za-z]+/i.test(values.surname)) {
-      errors.surname = 'Invalid surname';
-    }
-
-    if (!values.email) {
-      errors.email = '*Email required ';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-    ) {
-      errors.email = '*Invalid email address';
-    }
-
-    if (!values.password) {
-      errors.password = 'Password required';
-    } else if (values.password.length < 6) {
-      errors.password = 'Password size must be greater than 5';
-    }
-
-    if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = 'Password must be the same';
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
+  const handleSubmit = (
+    values: SignUpValues,
+    { setSubmitting }: FormikHelpers<SignUpValues>
+  ) => {
     dispatch(signUp(values)).then((result) => {
       if (!('error' in result)) {
-        dispatch(login({
-          email: values.email,
-          password: values.password,
-        })).then(() => {
+        dispatch(
+          login({
+            email: values.email,
+            password: values.password,
+          })
+        ).then(() => {
           navigate('/');
           dispatch(getInfo());
         });
@@ -74,7 +56,7 @@ function SignUp() {
   return (
     <Auth
       onSubmit={handleSubmit}
-      onValidate={handleValidate}
+      validationSchema={validationScheme}
       inputs={[
         [
           {
@@ -105,7 +87,11 @@ function SignUp() {
         },
       ]}
       initialValues={{
-        email: '', password: '', confirmPassword: '', name: '', surname: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        name: '',
+        surname: '',
       }}
       footerLinkText="login"
       footerLinkNavigation="/login"
