@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { login, signUp } from '../../../store/auth';
-import { getInfo } from '../../../store/user';
+import { signUp } from '../../../store/auth';
+import { getAvatar, getInfo } from '../../../store/user';
 
 type SignUpValues = {
   name: string;
@@ -38,15 +38,9 @@ function SignUp() {
   ) => {
     dispatch(signUp(values)).then((result) => {
       if (!('error' in result)) {
-        dispatch(
-          login({
-            email: values.email,
-            password: values.password,
-          })
-        ).then(() => {
-          navigate('/');
-          dispatch(getInfo());
-        });
+        navigate('/');
+        dispatch(getInfo());
+        dispatch(getAvatar());
       }
 
       setSubmitting(false);

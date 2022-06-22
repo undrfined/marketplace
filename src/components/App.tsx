@@ -1,22 +1,32 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
-import store from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
 import Home from './pages/Home/Home';
+import { startTokenCheck } from '../store/auth';
+import { getAvatar, getInfo } from '../store/user';
 
 function App() {
+  const dispatch = useAppDispatch();
+  const token = useAppSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    if (!token) return;
+    dispatch(startTokenCheck(token)).then(() => {
+      dispatch(getInfo());
+      dispatch(getAvatar());
+    });
+  }, [token]);
+
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signUp" element={<SignUp />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<SignUp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

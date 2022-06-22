@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import Auth from '../Auth/Auth';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { login } from '../../../store/auth';
-import { getInfo } from '../../../store/user';
+import { getAvatar, getInfo } from '../../../store/user';
 
 type LoginValues = {
   email: string;
@@ -30,6 +30,7 @@ function Login() {
   ) => {
     dispatch(login(values)).then(() => {
       dispatch(getInfo());
+      dispatch(getAvatar());
       navigate('/');
       setSubmitting(false);
     });
