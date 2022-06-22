@@ -1,0 +1,54 @@
+.allCategories {
+  width: 72vw;
+  margin-top: 4.5vh;
+}
+.flexCategories {
+  //   width: 100%;
+  display: inline;
+  //   margin-left: -5vw;
+  //   margin-inline-start: 1vw;
+}
+
+.title {
+  //   font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 27px;
+  color: #313131;
+}
+.categoryImage {
+  border-radius: 6px;
+  width: 7vw;
+  height: 10vh;
+  cursor: pointer;
+}
+.categoryImageСhosen {
+  border-radius: 6px;
+  width: 7vw;
+  height: 10vh;
+  cursor: pointer;
+  border: 2px solid #3bbeb6;
+}
+.category {
+  margin-left: 1vw;
+}
+.categoriesText {
+  //   font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #313131;
+  cursor: pointer;
+}
+.choosenCategory {
+  //   font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+
+  /* price & links */
+  color: #3bbeb6;
+}
