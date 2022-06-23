@@ -52,16 +52,27 @@
   }
 }
 
+.icon-translucent:hover {
+  background-color: var(--color-background-input);
+}
+
 .icon-primary {
   composes: icon-translucent;
+  background-color: var(--color-text);
+
+  :global(i) {
+    color: var(--color-background);
+  }
+
+  &:hover {
+    background-color: var(--color-text);
+    opacity: 0.8;
+  }
 }
 
 .icon-secondary {
   composes: icon-translucent;
-}
-
-.icon-translucent:hover {
-  background-color: var(--color-background-input);
+  background-color: var(--color-secondary-icon-button);
 }
 
 

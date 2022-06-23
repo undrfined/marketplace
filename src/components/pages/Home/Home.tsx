@@ -6,6 +6,7 @@ import { getAllTags } from '../../../store/tags';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { getGoods } from '../../../store/goods';
 import Categories from '../Categories/Categories';
+import ItemCard from '../../common/ItemCard/ItemCard';
 
 function Home() {
   const dispatch = useAppDispatch();
@@ -27,7 +28,9 @@ function Home() {
     <Page className={styles.root}>
       {/* <ImageSlider images={images} /> */}
       <Categories tags={Object.values(tags)} />
-      {Object.values(goods).map((good) => <div key={good.id}>{good.name}</div>)}
+      <div className={styles.goods}>
+        {Object.values(goods).map((good) => <ItemCard key={good.id} item={good} />)}
+      </div>
     </Page>
   );
 }

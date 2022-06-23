@@ -1,9 +1,12 @@
+import type { ApiImage } from './index';
+
 type Route<T> = `goods/${T}`;
 
 export type ApiGood = {
   id: number;
   name: string;
   price: number;
+  picture: ApiImage[];
 };
 
 type GetGoods = {
