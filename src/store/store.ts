@@ -4,6 +4,7 @@ import auth from './auth';
 import user from './user';
 import tags from './tags';
 import goods from './goods';
+import cart from './cart';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     user,
     tags,
     goods,
+    cart,
   },
 });
 

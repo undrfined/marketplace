@@ -20,7 +20,8 @@ function Page({
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.auth.token);
   const avatarUrl = useAppSelector((state) => state.user.avatarUrl);
-
+  const totalCountInCart = useAppSelector((state) => Object.values(state.cart.items)
+    .reduce((acc, item) => acc + item, 0));
   const handleClickMenu = useCallback(() => {
     dispatch(logOut());
   }, []);
@@ -51,7 +52,7 @@ function Page({
             onBlur={() => setIsSearchFocused(false)}
           />
 
-          <Button variant="icon-translucent" className={styles.left} badge="3">
+          <Button variant="icon-translucent" className={styles.left} badge={totalCountInCart ? totalCountInCart.toString() : undefined}>
             <i className="icon-cart" />
           </Button>
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ApiGood } from '../../../api/types/goods';
 
 import styles from './ItemCard.module.scss';
 import formatCurrency from '../../../helpers/formatCurrency';
 import Button from '../Button/Button';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { addToCart, removeFromCart } from '../../../store/cart';
 
 type OwnProps = {
   item: ApiGood;
@@ -12,13 +14,27 @@ type OwnProps = {
 function ItemCard({
   item
 }: OwnProps) {
+  const dispatch = useAppDispatch();
+
+  const countInCart = useAppSelector((state) => state.cart.items[item.id]);
+
+  const handleAdd = useCallback(() => {
+    dispatch(addToCart(item.id));
+  }, []);
+
+  const handleRemove = useCallback(() => {
+    dispatch(removeFromCart(item.id));
+  }, []);
+
   return (
     <div className={styles.root}>
       <img className={styles.image} src={item.picture[0].presignedUrl} alt={item.name} />
-      <div className={styles.inCartBadge}>
-        <i className="icon-cart" />
-        In cart
-      </div>
+      {Boolean(countInCart) && (
+        <div className={styles.inCartBadge}>
+          <i className="icon-cart" />
+          In cart
+        </div>
+      )}
       <div className={styles.info}>
         <div className={styles.title}>{item.name}</div>
         <div className={styles.soldCount}>234 sold</div>
@@ -26,11 +42,17 @@ function ItemCard({
       </div>
 
       <div className={styles.buttons}>
-        <Button variant="icon-secondary" className={styles.button}>
-          <i className="icon-minus" />
-        </Button>
-        <div className={styles.count}>5</div>
-        <Button variant="icon-primary" className={styles.button}>
+        {Boolean(countInCart) && (
+          <>
+            <Button variant="icon-secondary" className={styles.button} onClick={handleRemove}>
+              <i className="icon-minus" />
+            </Button>
+            <div className={styles.count}>
+              {countInCart}
+            </div>
+          </>
+        )}
+        <Button variant="icon-primary" className={styles.button} onClick={handleAdd}>
           <i className="icon-plus" />
         </Button>
       </div>
