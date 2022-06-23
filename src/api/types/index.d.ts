@@ -19,6 +19,11 @@ export type ApiMethodHttpType = { [T in All as T['type']]: T['method'] };
 export type ApiMethodResponse = { [T in All as T['type']]: T['response'] & ApiDefaultMethodField };
 export type ApiMethodNames = All['type'];
 
+export type ApiImage = {
+  name: string;
+  presignedUrl: string;
+};
+
 export type ApiJwtPayload = {
   exp: number;
   aud: string;

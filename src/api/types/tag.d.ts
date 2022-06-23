@@ -1,12 +1,11 @@
+import type { ApiImage } from './index';
+
 type Route<T> = `tags/${T}`;
 
 export type ApiTag = {
   id: number;
   name: string;
-  picture: {
-    name: string;
-    presignedUrl: string;
-  }[];
+  picture: ApiImage[];
 };
 
 type CreateTag = {

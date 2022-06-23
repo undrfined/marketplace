@@ -1,3 +1,5 @@
+import type { ApiImage } from './index';
+
 type Route<T> = `user/${T}`;
 
 type GetInfo = {
@@ -15,7 +17,9 @@ type GetAvatar = {
   type: Route<'getavatar'>;
   method: 'GET';
   request: null;
-  response: string;
+  response: {
+    url: ApiImage[];
+  };
 };
 
 type UpdateInfo = {

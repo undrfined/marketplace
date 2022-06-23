@@ -63,7 +63,7 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getAvatar.fulfilled, (state, { payload }) => {
-        state.avatarUrl = payload;
+        state.avatarUrl = payload.url[0]?.presignedUrl;
         state.isLoading = false;
       });
 
@@ -76,8 +76,7 @@ const userSlice = createSlice({
         state.error = error.message;
         state.isLoading = false;
       })
-      .addCase(updateAvatar.fulfilled, (state, { payload }) => {
-        console.log(payload);
+      .addCase(updateAvatar.fulfilled, (state) => {
         state.isLoading = false;
       });
   },
