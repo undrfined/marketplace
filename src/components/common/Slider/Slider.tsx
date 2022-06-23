@@ -5,18 +5,16 @@ import React from 'react';
 import styles from './Slider.module.scss';
 
 function ImageSlider({ images }: any) {
-  const settings = {
-    // infinite: true,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: true,
-  };
   return (
-    <div className={styles.imgslider}>
-      <Slider {...settings}>
+    <div className={styles.root}>
+      <Slider
+        dots
+        slidesToShow={1}
+        slidesToScroll={1}
+        variableWidth
+      >
         {images.map((item: any) => (
-          <div className={styles.image} key={item.id}>
+          <div className={styles.slide} key={item.id}>
             <img className={styles.img} src={item.src} alt={item.src} />
           </div>
         ))}
@@ -24,4 +22,5 @@ function ImageSlider({ images }: any) {
     </div>
   );
 }
+
 export default ImageSlider;

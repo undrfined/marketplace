@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 import Logo from '../../../assets/images/Logo.svg';
 import styles from './Page.module.scss';
 import Button from '../../common/Button/Button';
@@ -9,12 +10,11 @@ import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { logOut } from '../../../store/auth';
 import { updateAvatar } from '../../../store/user';
 
-type OwnProps = {
-  children: React.ReactNode;
-};
+type OwnProps = React.HTMLProps<HTMLDivElement>;
 
 function Page({
   children,
+  ...otherProps
 }: OwnProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ function Page({
   }, []);
 
   const isLoggedIn = Boolean(token);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   return (
     <div className={styles.root}>
@@ -42,7 +43,13 @@ function Page({
         <div className={styles.header}>
           <img src={Logo} alt="Logo" />
 
-          <Input placeholder="Search..." icon="icon-search" className={styles.search} />
+          <Input
+            placeholder="Search..."
+            icon="icon-search"
+            className={styles.search}
+            onFocus={() => setIsSearchFocused(true)}
+            onBlur={() => setIsSearchFocused(false)}
+          />
 
           <Button variant="icon-translucent" className={styles.left} badge="3">
             <i className="icon-cart" />
@@ -69,7 +76,12 @@ function Page({
           )}
         </div>
       </div>
-      {children}
+      <div className={cn(styles.searchResults, isSearchFocused && styles.searchResultsOpen)}>
+        Search result
+      </div>
+      <div {...otherProps}>
+        {children}
+      </div>
     </div>
   );
 }

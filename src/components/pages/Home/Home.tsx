@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styles from './Home.module.scss';
 import Page from '../Page/Page';
+import { getAllTags } from '../../../store/tags';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { getGoods } from '../../../store/goods';
 import Categories from '../Categories/Categories';
-import ImageSlider from '../../common/Slider/Slider';
 
 function Home() {
-  const [allCategories, setAllCategories] = React.useState([]);
-  const [images, setImages] = React.useState([]);
-  React.useEffect(() => {
-    fetch('http://localhost:3000/db.json')
-      .then((res) => res.json())
-      .then((json) => setAllCategories(json.allCategories));
+  const dispatch = useAppDispatch();
+
+  const tags = useAppSelector((state) => state.tags.tags);
+  const goods = useAppSelector((state) => state.goods.goods);
+
+  useEffect(() => {
+    dispatch(getAllTags());
+    dispatch(getGoods({
+      category: 0,
+      nameFilter: '',
+      idOfPreviousGood: 0,
+      numOfGoodsToGet: 10
+    }));
   }, []);
-  React.useEffect(() => {
-    fetch('http://localhost:3000/db.json')
-      .then((res) => res.json())
-      .then((json) => setImages(json.images));
-  }, []);
+
   return (
-    <Page>
-      <div className={styles.root}>
-        <ImageSlider images={images} />
-        <Categories categories={allCategories} />
-      </div>
+    <Page className={styles.root}>
+      {/* <ImageSlider images={images} /> */}
+      <Categories tags={Object.values(tags)} />
+      {Object.values(goods).map((good) => <div key={good.id}>{good.name}</div>)}
     </Page>
   );
 }

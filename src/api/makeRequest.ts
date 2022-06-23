@@ -8,8 +8,15 @@ export default function makeRequest<T extends ApiMethodNames>(
   httpMethod: ApiMethodHttpType[T],
   token?: string,
 ): Promise<ApiMethodResponse[T]> {
-  return fetch(`${process.env.REACT_APP_API_ENDPOINT}${method}`, {
-    method: httpMethod === 'FILE' ? 'POST' : httpMethod,
+  const getParams = httpMethod === 'GET' && params
+    ? `?${Object.keys(params).reduce((acc, key) => {
+      acc.append(key, (params as any)[key]);
+      return acc;
+    }, new URLSearchParams()).toString()}`
+    : '';
+
+  return fetch(`${process.env.REACT_APP_API_ENDPOINT}${method}${getParams}`, {
+    method: httpMethod === 'FILE' ? 'PUT' : httpMethod,
     headers: {
       ...(httpMethod !== 'GET' && httpMethod !== 'FILE' && { 'Content-Type': 'application/json' }),
       ...(token && { Authorization: `Bearer ${token}` }),

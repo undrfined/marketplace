@@ -1,53 +1,51 @@
 import React, { useState } from 'react';
-import Slider from 'react-slick';
 import styles from './Categories.module.scss';
-import 'slick-carousel/slick/slick.scss';
-import 'slick-carousel/slick/slick-theme.css';
+import { ApiTag } from '../../../api/types/tag';
 
-export default function Categories({ categories }: any) {
+type OwnProps = {
+  tags?: ApiTag[];
+};
+
+function Categories({ tags }: OwnProps) {
   const [activeItem, setActiveItem] = useState(0);
-  const settings = {
-    infinite: true,
-    slidesToShow: 9,
-    slidesToScroll: 5,
-    variableWidth: true,
-  };
+
   return (
-    <div className={styles.allCategories}>
-      <p className={styles.title}>Categories</p>
+    <div className={styles.root}>
+      <h1 className={styles.title}>Categories</h1>
       <div className={styles.flexCategories}>
-        <Slider {...settings}>
-          {categories.map((value: any, index: number) => (
-            <div className={styles.category} key={`${value.Name}`}>
-              <input
-                type="image"
-                onClick={() => setActiveItem(index)}
-                className={
+
+        {tags?.map((tag: ApiTag, index: number) => (
+          <div className={styles.category} key={tag.id}>
+            <input
+              type="image"
+              onClick={() => setActiveItem(index)}
+              className={
                   activeItem === index
-                    ? styles.categoryImageСhosen
+                    ? styles.categoryImageChosen
                     : styles.categoryImage
                 }
-                src={value.Image}
-                alt={value.Name}
-              />
-              <br />
-              <text
-                onClick={() => setActiveItem(index)}
-                onKeyDown={() => {
-                  setActiveItem(index);
-                }}
-                className={
+              src={tag.picture[0].presignedUrl}
+              alt={tag.name}
+            />
+            <br />
+            <button
+              onClick={() => setActiveItem(index)}
+              onKeyDown={() => {
+                setActiveItem(index);
+              }}
+              className={
                   activeItem === index
-                    ? styles.choosenCategory
+                    ? styles.chosenCategory
                     : styles.categoriesText
                 }
-              >
-                {value.Name}
-              </text>
-            </div>
-          ))}
-        </Slider>
+            >
+              {tag.name}
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
+
+export default Categories;
