@@ -1,6 +1,5 @@
 import CategoryAll from '../assets/images/CategoryAll.png';
 
-// eslint-disable-next-line import/prefer-default-export
 export const CATEGORY_ALL = {
   name: 'All',
   id: 0,
@@ -11,3 +10,5 @@ export const CATEGORY_ALL = {
     }
   ],
 };
+
+export const GOODS_PER_PAGE = 10;

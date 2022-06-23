@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 import Logo from '../../../assets/images/Logo.svg';
 import styles from './Page.module.scss';
 import Button from '../../common/Button/Button';
@@ -14,6 +15,7 @@ type OwnProps = React.HTMLProps<HTMLDivElement>;
 
 function Page({
   children,
+  className,
   ...otherProps
 }: OwnProps) {
   const dispatch = useAppDispatch();
@@ -45,7 +47,7 @@ function Page({
     <div className={styles.root}>
       <div className={styles.headerWrapper}>
         <div className={styles.header}>
-          <img src={Logo} alt="Logo" />
+          <img src={Logo} alt="Logo" onClick={() => navigate('/')} className={styles.logo} />
 
           <Input
             placeholder="Search..."
@@ -86,7 +88,7 @@ function Page({
         isOpen={isSearchFocused}
         onClose={() => setIsSearchFocused(false)}
       />
-      <div {...otherProps}>
+      <div {...otherProps} className={cn(className, styles.content)}>
         {children}
       </div>
     </div>

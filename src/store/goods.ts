@@ -7,12 +7,15 @@ import { ApiGood } from '../api/types/goods';
 type GoodsState = {
   isLoading: boolean;
   error?: string;
-  goods: Record<number, ApiGood>;
+  goodsByTagId: Record<number, {
+    goods: Record<number, ApiGood>;
+    isEnd?: boolean;
+  }>;
 };
 
 const initialState: GoodsState = {
   isLoading: false,
-  goods: {},
+  goodsByTagId: {},
 };
 
 export const getGoods = createAsyncThunk(
@@ -35,12 +38,19 @@ const goodsSlice = createSlice({
         state.error = error.message;
         state.isLoading = false;
       })
-      .addCase(getGoods.fulfilled, (state, { payload }) => {
-        console.log(payload);
-        state.goods = payload.goods.reduce((acc: Record<number, ApiGood>, good) => {
+      .addCase(getGoods.fulfilled, (state, { payload, meta }) => {
+        const result = payload.goods.reduce((acc: Record<number, ApiGood>, good) => {
           acc[good.id] = good;
           return acc;
         }, {});
+
+        state.goodsByTagId[meta.arg.category] = {
+          goods: {
+            ...(state.goodsByTagId[meta.arg.category]?.goods || {}),
+            ...result,
+          },
+          isEnd: Object.keys(result).length === 0,
+        };
         state.isLoading = false;
       });
   },
