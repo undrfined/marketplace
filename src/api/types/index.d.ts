@@ -4,6 +4,7 @@ import type { SignUpController } from './signUp';
 import type { TokenController } from './token';
 import type { TagController } from './tag';
 import type { GoodsController } from './goods';
+import type { BasesController } from './bases';
 
 type ApiDefaultMethodField = {
   status: 'Error' | 'Success';
@@ -11,7 +12,7 @@ type ApiDefaultMethodField = {
 
 type All = (
     LoginController | SignUpController | UserController | TokenController | TagController |
-    GoodsController
+    GoodsController | BasesController
 );
 
 export type ApiMethod = { [T in All as T['type']]: T['request'] };

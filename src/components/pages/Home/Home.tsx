@@ -10,12 +10,15 @@ import Categories from '../Categories/Categories';
 import ItemCard from '../../common/ItemCard/ItemCard';
 import Loader from '../../common/Loader/Loader';
 import { GOODS_PER_PAGE } from '../../../helpers/consts';
+import { getAllBases } from '../../../store/bases';
+import ImageSlider from '../../common/Slider/Slider';
 
 function Home() {
   const dispatch = useAppDispatch();
 
   const [activeTagId, setActiveTagId] = useState(0);
 
+  const bases = useAppSelector((state) => state.bases.bases);
   const tags = useAppSelector((state) => state.tags.tags);
   const goods = useAppSelector((state) => state.goods.goodsByTagId[activeTagId]?.goods) || {};
   const isEnd = useAppSelector((state) => state.goods.goodsByTagId[activeTagId]?.isEnd);
@@ -32,6 +35,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(getAllTags());
+    dispatch(getAllBases());
   }, []);
 
   useEffect(() => {
@@ -42,7 +46,7 @@ function Home() {
 
   return (
     <Page className={styles.root}>
-      {/* <ImageSlider images={images} /> */}
+      <ImageSlider bases={Object.values(bases)} />
       <h1 className={styles.title}>Categories</h1>
       <Categories tags={Object.values(tags)} chosenTag={activeTagId} onSelectTag={setActiveTagId} />
       <h1 className={styles.title}>All products</h1>

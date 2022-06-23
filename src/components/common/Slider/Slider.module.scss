@@ -1,13 +1,63 @@
 .root {
-  width: 72vw;
+  width: 100%;
+  margin-bottom: 2rem;
+}
 
-  margin-top: 5vh;
-}
 .slide {
-  height: 45vh;
-  width: 72vw;
-}
-.img {
   height: 100%;
-  width: 72vw;
+  width: 100vw;
+  position: relative;
+}
+
+.slide::after {
+  position: absolute;
+  display: block;
+  content: "";
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), transparent);
+  z-index: 1;
+}
+
+.img {
+  object-fit: cover;
+  width: 100%;
+  height: 500px;
+}
+
+.description {
+  position: absolute;
+  bottom: 200px;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 10px;
+  color: var(--color-background);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.name {
+  position: absolute;
+  bottom: 30px;
+  font-weight: 800;
+  font-size: 150px;
+  color: var(--color-background);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.root :global(.slick-list) {
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.root :global(.slick-next) {
+  right: 25px;
+  z-index: 1;
+}
+
+.root :global(.slick-prev) {
+  left: 25px;
+  z-index: 1;
 }
