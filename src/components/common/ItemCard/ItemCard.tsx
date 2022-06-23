@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ApiGood } from '../../../api/types/goods';
 
 import styles from './ItemCard.module.scss';
@@ -15,19 +16,26 @@ function ItemCard({
   item
 }: OwnProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const countInCart = useAppSelector((state) => state.cart.items[item.id]);
 
-  const handleAdd = useCallback(() => {
+  const handleAdd = useCallback((e: React.UIEvent) => {
     dispatch(addToCart(item.id));
+    e.stopPropagation();
   }, []);
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = useCallback((e: React.UIEvent) => {
     dispatch(removeFromCart(item.id));
+    e.stopPropagation();
+  }, []);
+
+  const handleClick = useCallback(() => {
+    navigate(`/goods/${item.id}`);
   }, []);
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} onClick={handleClick}>
       <img className={styles.image} src={item.picture[0].presignedUrl} alt={item.name} />
       {Boolean(countInCart) && (
         <div className={styles.inCartBadge}>

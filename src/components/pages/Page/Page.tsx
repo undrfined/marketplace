@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import cn from 'classnames';
 import Logo from '../../../assets/images/Logo.svg';
 import styles from './Page.module.scss';
 import Button from '../../common/Button/Button';
@@ -9,6 +8,7 @@ import Input from '../../common/Input/Input';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { logOut } from '../../../store/auth';
 import { updateAvatar } from '../../../store/user';
+import SearchResults from '../../common/SearchResults/SearchResults';
 
 type OwnProps = React.HTMLProps<HTMLDivElement>;
 
@@ -22,6 +22,9 @@ function Page({
   const avatarUrl = useAppSelector((state) => state.user.avatarUrl);
   const totalCountInCart = useAppSelector((state) => Object.values(state.cart.items)
     .reduce((acc, item) => acc + item, 0));
+
+  const [searchFilter, setSearchFilter] = useState('');
+
   const handleClickMenu = useCallback(() => {
     dispatch(logOut());
   }, []);
@@ -50,6 +53,7 @@ function Page({
             className={styles.search}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
+            onChange={(e) => { setSearchFilter(e.currentTarget.value); }}
           />
 
           <Button variant="icon-translucent" className={styles.left} badge={totalCountInCart ? totalCountInCart.toString() : undefined}>
@@ -77,9 +81,11 @@ function Page({
           )}
         </div>
       </div>
-      <div className={cn(styles.searchResults, isSearchFocused && styles.searchResultsOpen)}>
-        Search result
-      </div>
+      <SearchResults
+        searchFilter={searchFilter}
+        isOpen={isSearchFocused}
+        onClose={() => setIsSearchFocused(false)}
+      />
       <div {...otherProps}>
         {children}
       </div>

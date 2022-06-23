@@ -1,4 +1,5 @@
 import type { ApiImage } from './index';
+import type { ApiTag } from './tag';
 
 type Route<T> = `goods/${T}`;
 
@@ -20,6 +21,7 @@ type GetGoods = {
   };
   response: {
     goods: ApiGood[];
+    tags: ApiTag[];
   }
 };
 

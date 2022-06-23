@@ -19,7 +19,11 @@ module.exports = {
     '@typescript-eslint/comma-dangle': ['error', 'only-multiline'],
     'no-param-reassign': [2, { props: false }],
     'react/prop-types': 'off',
+    'no-nested-ternary': 'off',
     'react/button-has-type': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/no-noninteractive-element-interactions': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
     'react/jsx-filename-extension': [

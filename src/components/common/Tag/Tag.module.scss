@@ -1,0 +1,36 @@
+.category {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.categoryImage {
+  border-radius: 0.625rem;
+  width: 8.25rem;
+  height: 8.25rem;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid transparent;
+}
+
+.categoryImageChosen {
+  composes: categoryImage;
+  border-color: var(--color-accent);
+}
+
+.categoriesText {
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--color-text);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+}
+
+.chosenCategory {
+  composes: categoriesText;
+  font-weight: 600;
+  color: var(--color-accent);
+}

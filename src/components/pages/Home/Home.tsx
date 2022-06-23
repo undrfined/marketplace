@@ -27,7 +27,9 @@ function Home() {
   return (
     <Page className={styles.root}>
       {/* <ImageSlider images={images} /> */}
+      <h1 className={styles.title}>Categories</h1>
       <Categories tags={Object.values(tags)} />
+      <h1 className={styles.title}>All products</h1>
       <div className={styles.goods}>
         {Object.values(goods).map((good) => <ItemCard key={good.id} item={good} />)}
       </div>

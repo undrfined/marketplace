@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  border-radius: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  background-color: var(--color-background-input);
+}
+
+.image {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-right: 0.75rem;
+}
+
+.selected {
+  .name {
+    color: var(--color-accent);
+  }
+}

@@ -5,6 +5,7 @@ import user from './user';
 import tags from './tags';
 import goods from './goods';
 import cart from './cart';
+import search from './search';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     tags,
     goods,
     cart,
+    search,
   },
 });
 

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type GoodsState = {
+type CartState = {
   // id -> count
   items: Record<number, number>;
 };
 
-const initialState: GoodsState = {
-  items: {}
+const initialState: CartState = {
+  items: JSON.parse(localStorage.getItem('cart') || '{}'),
 };
 
 const cartSlice = createSlice({
@@ -15,9 +15,11 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<number>) {
       state.items[action.payload] = (state.items[action.payload] ?? 0) + 1;
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
     removeFromCart(state, action: PayloadAction<number>) {
       state.items[action.payload] = (state.items[action.payload] ?? 1) - 1;
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
   },
 });

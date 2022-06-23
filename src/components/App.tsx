@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import Home from './pages/Home/Home';
 import { startTokenCheck } from '../store/auth';
 import { getAvatar, getInfo } from '../store/user';
+import Product from './pages/Product/Product';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/goods/:id" element={<Product />} />
       </Routes>
     </BrowserRouter>
   );
