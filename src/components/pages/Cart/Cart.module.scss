@@ -1,0 +1,36 @@
+.cart {
+  margin-top: 6vh;
+}
+.title {
+  font-size: 24px;
+  color: var(--color-text);
+  margin-left: 2rem;
+  margin-bottom: auto;
+}
+.subtitle {
+  margin-left: 2rem;
+  color: var(--color-text);
+  margin-top: auto;
+}
+.total {
+  width: 100%;
+  bottom: 0%;
+  height: 15vh;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(19px);
+  border-radius: 50px 50px 0px 0px;
+}
+.goods {
+  max-height: 70vh;
+  overflow: auto;
+}
+.goods::-webkit-scrollbar {
+  display: none;
+}
+.button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}

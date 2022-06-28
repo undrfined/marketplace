@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
+import SlidingPane from 'react-sliding-pane';
 import Logo from '../../../assets/images/Logo.svg';
 import styles from './Page.module.scss';
 import Button from '../../common/Button/Button';
@@ -10,44 +11,53 @@ import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { logOut } from '../../../store/auth';
 import { updateAvatar } from '../../../store/user';
 import SearchResults from '../../common/SearchResults/SearchResults';
+import Cart from '../Cart/Cart';
 
 type OwnProps = React.HTMLProps<HTMLDivElement>;
 
-function Page({
-  children,
-  className,
-  ...otherProps
-}: OwnProps) {
+function Page({ children, className, ...otherProps }: OwnProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.auth.token);
   const avatarUrl = useAppSelector((state) => state.user.avatarUrl);
-  const totalCountInCart = useAppSelector((state) => Object.values(state.cart.items)
-    .reduce((acc, item) => acc + item, 0));
+  const totalCountInCart = useAppSelector((state) => Object.values(state.cart.items).reduce((acc, item) => acc + item, 0));
 
   const [searchFilter, setSearchFilter] = useState('');
+  const [openPanel, setOpenPanel] = useState(false);
 
   const handleClickMenu = useCallback(() => {
     dispatch(logOut());
   }, []);
 
-  const handleChangeAvatar = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleChangeAvatar = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-    dispatch(updateAvatar({
-      picture: file,
-    }));
-  }, []);
+      dispatch(
+        updateAvatar({
+          picture: file,
+        })
+      );
+    },
+    []
+  );
 
   const isLoggedIn = Boolean(token);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-
+  const changePanel = () => {
+    setOpenPanel(!openPanel);
+  };
   return (
     <div className={styles.root}>
       <div className={styles.headerWrapper}>
         <div className={styles.header}>
-          <img src={Logo} alt="Logo" onClick={() => navigate('/')} className={styles.logo} />
+          <img
+            src={Logo}
+            alt="Logo"
+            onClick={() => navigate('/')}
+            className={styles.logo}
+          />
 
           <Input
             placeholder="Search..."
@@ -55,15 +65,27 @@ function Page({
             className={styles.search}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            onChange={(e) => { setSearchFilter(e.currentTarget.value); }}
+            onChange={(e) => {
+              setSearchFilter(e.currentTarget.value);
+            }}
           />
 
-          <Button variant="icon-translucent" className={styles.left} badge={totalCountInCart ? totalCountInCart.toString() : undefined}>
+          <Button
+            onClick={changePanel}
+            variant="icon-translucent"
+            className={styles.left}
+            badge={totalCountInCart ? totalCountInCart.toString() : undefined}
+          >
             <i className="icon-cart" />
           </Button>
 
           {isLoggedIn && (
-            <Button variant="secondary" buttonSize="small" className={styles.loggedInButton} onClick={handleClickMenu}>
+            <Button
+              variant="secondary"
+              buttonSize="small"
+              className={styles.loggedInButton}
+              onClick={handleClickMenu}
+            >
               <i className="icon-menu" />
               <img src={avatarUrl || Logo} alt="Avatar" />
             </Button>
@@ -73,10 +95,20 @@ function Page({
 
           {!isLoggedIn && (
             <>
-              <Button variant="secondary" buttonSize="small" className={styles.button} onClick={() => navigate('/login')}>
+              <Button
+                variant="secondary"
+                buttonSize="small"
+                className={styles.button}
+                onClick={() => navigate('/login')}
+              >
                 Log in
               </Button>
-              <Button variant="primary" buttonSize="small" className={styles.button} onClick={() => navigate('/signUp')}>
+              <Button
+                variant="primary"
+                buttonSize="small"
+                className={styles.button}
+                onClick={() => navigate('/signUp')}
+              >
                 Sign up
               </Button>
             </>
@@ -88,6 +120,31 @@ function Page({
         isOpen={isSearchFocused}
         onClose={() => setIsSearchFocused(false)}
       />
+      <div className={styles.cart}>
+        <SlidingPane
+          from="right"
+          isOpen={openPanel}
+          onRequestClose={changePanel}
+          width="40vw"
+          className={styles.additional}
+          shouldCloseOnEsc
+          closeIcon={(
+            <div>
+              {' '}
+              <Button
+                variant="icon-translucent"
+                className={styles.cancelBtn}
+                onClick={changePanel}
+                buttonSize="small"
+              >
+                <i className="icon-close" />
+              </Button>
+            </div>
+          )}
+        >
+          <Cart />
+        </SlidingPane>
+      </div>
       <div {...otherProps} className={cn(className, styles.content)}>
         {children}
       </div>

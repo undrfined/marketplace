@@ -64,3 +64,26 @@
 .content {
   max-width: 1720px;
 }
+.cart {
+  position: absolute;
+  z-index: 100;
+  max-width: 30vw;
+  right: 0vw;
+  height: fit-content;
+  overflow: hidden;
+}
+.additional {
+  position: absolute;
+  z-index: 100;
+  top: 0vh;
+  right: 0vw;
+  background-color: white;
+  height: fit-content;
+  min-height: 100%;
+  width: 30vw;
+}
+.cancelBtn {
+  position: fixed;
+  right: 1vw;
+  top: 1vh;
+}
